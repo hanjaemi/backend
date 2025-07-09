@@ -15,12 +15,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    // Get List of all users
     @GetMapping("/users")
     ResponseEntity<List<User>> getUsers(){
         List<User> users = userService.findAll();
         return ResponseEntity.ok().body(users);
     }
 
+
+    // Get individual user information
     @GetMapping("/users/{userId}")
     ResponseEntity<User> getUser(@PathVariable long userId){
         User user = userService.findById(userId);

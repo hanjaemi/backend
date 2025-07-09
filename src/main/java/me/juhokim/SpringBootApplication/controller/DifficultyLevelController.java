@@ -18,7 +18,7 @@ public class DifficultyLevelController {
     @Autowired
     DifficultyLevelService difficultyLevelService;
 
-    // Show all difficulty levels
+    // Show lessons by difficulty levels
     @GetMapping("/difficulty-levels")
     ResponseEntity<List<DifficultyLevel>> getDifficultyLevel(){
         List<DifficultyLevel> difficultyLevels = difficultyLevelService.findAll();

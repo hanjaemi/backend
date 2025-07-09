@@ -1,19 +1,24 @@
 package me.juhokim.SpringBootApplication.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
 @Entity
+@Table(name = "Difficulty_Level")
 public class DifficultyLevel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer difficultyId;
+    @Column(name = "difficulty_id")
+    private Long difficultyId;
 
+    @Column(name = "name", length = 100)
     private String name;
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "lesson_count")
     private Integer lessonCount;
 }
