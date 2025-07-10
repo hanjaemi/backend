@@ -1,5 +1,5 @@
 # Worflow name
-name: CI
+name: CI/CD
 
 
 # Workflow starting condition
@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: 'corretto'
           java-version: '17'
 
       - name: Grant execute permission for gradlew
@@ -27,3 +27,33 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
+
+      - name: Get current time
+        uses: josStorer/get-current-time@v2.0.2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH-mm-ss
+          utcOffset: "+09:00"
+
+      - name: Set artifact
+        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+
+      - name: Copy JAR to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "./build/libs/${{ env.artifact }}"
+          target: "~"
+
+      - name: Run JAR on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            pkill -f 'java -jar' || true
+            nohup java -jar ~/${{ env.artifact }} > app.log 2>&1 &
+
