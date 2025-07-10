@@ -1,0 +1,29 @@
+# Worflow name
+name: CI
+
+
+# Workflow starting condition
+on:
+  push:
+    branches: [ backend ]
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Workflow running environment
+
+    # Steps for running
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
