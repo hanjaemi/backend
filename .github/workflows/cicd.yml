@@ -40,7 +40,14 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            pkill -f 'java -jar' || true
+            pids=$(pgrep -f 'java -jar')
+            if [ -n "$pids" ]; then
+              kill $pids
+              echo "Previous JAR process killed."
+            else
+              echo "No JAR process running."
+            fi
+
 
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@v0.1.4
