@@ -28,13 +28,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      - name: Get current time
-        uses: josStorer/get-current-time@v2.0.2
-        id: current-time
-        with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
-
       - name: Set artifact
         run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
 
@@ -44,7 +37,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "./build/libs/${{ env.artifact }}"
+          source: "${{ env.artifact }}"
           target: "~"
 
       - name: Run JAR on EC2
@@ -56,5 +49,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             pkill -f 'java -jar' || true
-            nohup java -jar ~/${{ env.artifact }} > app.log 2>&1 &
+            nohup java -jar backend-1.0-SNAPSHOT.jar > log.txt 2>&1 &
+
 
