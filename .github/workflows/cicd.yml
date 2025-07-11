@@ -37,8 +37,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "./springboot/${{ env.artifact }}"
-          target: "~"
+          source: "./build/libs/${{ env.artifact }}"       # 로컬에서 빌드 결과
+          target: "springboot"                             # EC2의 ~/springboot 디렉토리에 복사
 
       - name: Run JAR on EC2
         continue-on-error: true
