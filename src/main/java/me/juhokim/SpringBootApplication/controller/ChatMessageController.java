@@ -14,6 +14,11 @@ public class ChatMessageController {
     @Autowired
     private ChatMessageService chatMessageService;
 
+    @GetMapping("/test")
+    public String getTestPage(){
+        return "Testing";
+    }
+
     @GetMapping("/users/{userId}/chat-sessions/{chatId}")
     public ResponseEntity<List<ChatMessage>> getMessagesByChatIdForUser(
             @PathVariable Long userId,
