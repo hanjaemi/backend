@@ -16,7 +16,7 @@ public class ChatMessageController {
 
     @GetMapping("/test")
     public String getTestPage(){
-        return "Testing";
+        return "please work test";
     }
 
     @GetMapping("/users/{userId}/chat-sessions/{chatId}")
