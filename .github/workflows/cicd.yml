@@ -49,5 +49,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             pkill -f 'java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar'
+            sleep 5
             nohup java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar > springboot/build/libs/log.txt 2>&1 &
 
