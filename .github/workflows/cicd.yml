@@ -37,7 +37,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "./build/libs/${{ env.artifact }}"
+          source: "./springboot/${{ env.artifact }}"
           target: "~"
 
       - name: Run JAR on EC2
@@ -49,6 +49,5 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             pkill -f 'java -jar backend-1.0-SNAPSHOT.jar'
-            nohup java -jar backend-1.0-SNAPSHOT.jar > log.txt 2>&1 &
-
+            nohup java -jar springboot/backend-1.0-SNAPSHOT.jar > springboot/log.txt 2>&1 &
 
