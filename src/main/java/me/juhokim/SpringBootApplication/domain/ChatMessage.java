@@ -1,11 +1,14 @@
 package me.juhokim.SpringBootApplication.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -22,13 +25,25 @@ public class ChatMessage {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sender", nullable = false)
-    private SenderType sender;
+    private SenderType sender = SenderType.user;
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp = LocalDateTime.now();
+
+
+    @Builder
+    public ChatMessage(Long chatId, String content){
+        this.chatId = chatId;
+        this.content = content;
+    }
+
+    public void update(Long chatId, String content) {
+        this.chatId = chatId;
+        this.content = content;
+    }
 
     public enum SenderType {
         user, system

@@ -11,5 +11,5 @@ public interface ChatSessionRepository extends JpaRepository<ChatSession, Long> 
 
     List<ChatSession> findByUserId(Long userId);
 
-    ObservationFilter findByUserIdAndChatId(Long userId, Long chatId);
+    ChatSession findByChatId(Long chatId);
 }
