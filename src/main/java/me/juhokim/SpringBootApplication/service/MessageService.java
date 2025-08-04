@@ -1,8 +1,7 @@
 // ChatMessageService.java
 package me.juhokim.SpringBootApplication.service;
 
-import me.juhokim.SpringBootApplication.domain.ChatMessage;
-import me.juhokim.SpringBootApplication.domain.ChatSession;
+import me.juhokim.SpringBootApplication.domain.Message;
 import me.juhokim.SpringBootApplication.dto.ChatMessageRequest;
 import me.juhokim.SpringBootApplication.repository.ChatMessageRepository;
 import me.juhokim.SpringBootApplication.repository.ChatSessionRepository;
@@ -22,13 +21,13 @@ public class ChatMessageService {
 
 
 
-    public List<ChatMessage> findByChatId(Long chatId) {
+    public List<Message> findByChatId(Long chatId) {
         return chatMessageRepository.findByChatId(chatId);
     }
 
 
 
-    public ChatMessage save(ChatMessageRequest dto) {
+    public Message save(ChatMessageRequest dto) {
         return chatMessageRepository.save(dto.toEntity());
     }
 
@@ -40,8 +39,8 @@ public class ChatMessageService {
 
 
 
-    public ChatMessage updateById(Long messageId, ChatMessageRequest dto) {
-        ChatMessage currentMessage = chatMessageRepository.findByMessageId(messageId);
+    public Message updateById(Long messageId, ChatMessageRequest dto) {
+        Message currentMessage = chatMessageRepository.findByMessageId(messageId);
         currentMessage.update(dto.getChatId(), dto.getContent());
 
         chatMessageRepository.save(currentMessage);

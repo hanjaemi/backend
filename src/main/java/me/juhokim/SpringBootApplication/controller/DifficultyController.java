@@ -1,11 +1,8 @@
 package me.juhokim.SpringBootApplication.controller;
 
 
-import me.juhokim.SpringBootApplication.domain.DifficultyLevel;
-import me.juhokim.SpringBootApplication.domain.User;
-import me.juhokim.SpringBootApplication.repository.DifficultyLevelRepository;
+import me.juhokim.SpringBootApplication.domain.Difficulty;
 import me.juhokim.SpringBootApplication.service.DifficultyLevelService;
-import me.juhokim.SpringBootApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +17,8 @@ public class DifficultyLevelController {
 
     // Show lessons by difficulty levels
     @GetMapping("/difficulty-levels")
-    ResponseEntity<List<DifficultyLevel>> getDifficultyLevel(){
-        List<DifficultyLevel> difficultyLevels = difficultyLevelService.findAll();
+    ResponseEntity<List<Difficulty>> getDifficultyLevel(){
+        List<Difficulty> difficultyLevels = difficultyLevelService.findAll();
         return ResponseEntity.ok().body(difficultyLevels);
     }
 }

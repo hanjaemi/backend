@@ -2,16 +2,16 @@ package me.juhokim.SpringBootApplication.dto;
 
 
 import lombok.Getter;
-import me.juhokim.SpringBootApplication.domain.ChatSession;
+import me.juhokim.SpringBootApplication.domain.Chat;
 
 @Getter
 public class ChatSessionRequest {
     String chatTitle;
     Long userId;
 
-    public ChatSession toEntity(){
+    public Chat toEntity(){
 
-        return ChatSession.builder()
+        return Chat.builder()
                 .chatTitle(chatTitle)
                 .userId(userId)
                 .build();

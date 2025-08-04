@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "Difficulty_Level")
+@Table(name = "Difficulty")
 public class DifficultyLevel {
 
     @Id

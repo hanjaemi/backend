@@ -1,6 +1,6 @@
 package me.juhokim.SpringBootApplication.controller;
 
-import me.juhokim.SpringBootApplication.domain.ChatMessage;
+import me.juhokim.SpringBootApplication.domain.Message;
 import me.juhokim.SpringBootApplication.dto.ChatMessageRequest;
 import me.juhokim.SpringBootApplication.service.ChatMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +18,24 @@ public class ChatMessageController {
 
     // [Post] Send a chat message (x)
     @PostMapping("/users/{userId}/chat-sessions/{chat_id}")
-    public ResponseEntity<ChatMessage> createChatMessage(@RequestBody ChatMessageRequest dto){
-        ChatMessage newMessage = chatMessageService.save(dto);
+    public ResponseEntity<Message> createChatMessage(@RequestBody ChatMessageRequest dto){
+        Message newMessage = chatMessageService.save(dto);
         return ResponseEntity.ok(newMessage);
     }
 
     // [GET] Get all chat messages (x)
     @GetMapping("/users/{userId}/chat-sessions/{chatId}")
-    public ResponseEntity<List<ChatMessage>> getMessagesByChatIdForUser(
+    public ResponseEntity<List<Message>> getMessagesByChatIdForUser(
             @PathVariable Long chatId) {
-        List<ChatMessage> messages = chatMessageService.findByChatId(chatId);
+        List<Message> messages = chatMessageService.findByChatId(chatId);
         return ResponseEntity.ok(messages);
     }
 
 
     // [PUT] Update Chat Message (X)
     @PutMapping("/users/{userId}/chat-sessions/{chat_id}/message/{message_id}")
-    public ResponseEntity<ChatMessage> updateMessage(@PathVariable Long message_id, @RequestBody ChatMessageRequest dto){
-        ChatMessage updatedMessage = chatMessageService.updateById(message_id, dto);
+    public ResponseEntity<Message> updateMessage(@PathVariable Long message_id, @RequestBody ChatMessageRequest dto){
+        Message updatedMessage = chatMessageService.updateById(message_id, dto);
         return ResponseEntity.ok(updatedMessage);
     }
 
