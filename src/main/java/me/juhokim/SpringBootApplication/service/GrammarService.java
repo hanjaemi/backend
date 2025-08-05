@@ -1,10 +1,7 @@
 // ChatMessageService.java
 package me.juhokim.SpringBootApplication.service;
 
-import me.juhokim.SpringBootApplication.domain.ChatMessage;
 import me.juhokim.SpringBootApplication.domain.Grammar;
-import me.juhokim.SpringBootApplication.repository.ChatMessageRepository;
-import me.juhokim.SpringBootApplication.repository.ChatSessionRepository;
 import me.juhokim.SpringBootApplication.repository.GrammarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChatMessageRepository extends JpaRepository<Message, Long> {
+public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findByChatId(Long chatId);
     Message findByMessageId(Long messageId);
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "message")
-public class ChatMessage {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class ChatMessage {
 
 
     @Builder
-    public ChatMessage(Long chatId, String content){
+    public Message(Long chatId, String content){
         this.chatId = chatId;
         this.content = content;
     }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Grammar_Rule")
+@Table(name = "grammar")
 public class Grammar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,15 @@ public class Grammar {
     @Column(name = "title", length = 50)
     private String title;
 
-    @Column(name = "explanation", length = 255)
-    private String explanation;
+    @Column(name = "description", length = 255)
+    private String description;
 
     @Column(name = "example", columnDefinition = "TEXT")
     private String example;
+
+    @Column(name = "translation", columnDefinition = "TEXT")
+    private String translation;
+
+    @Column(name = "type", columnDefinition = "TEXT")
+    private String type;
 }

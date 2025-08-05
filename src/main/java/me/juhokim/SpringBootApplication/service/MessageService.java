@@ -2,22 +2,22 @@
 package me.juhokim.SpringBootApplication.service;
 
 import me.juhokim.SpringBootApplication.domain.Message;
-import me.juhokim.SpringBootApplication.dto.ChatMessageRequest;
-import me.juhokim.SpringBootApplication.repository.ChatMessageRepository;
-import me.juhokim.SpringBootApplication.repository.ChatSessionRepository;
+import me.juhokim.SpringBootApplication.dto.MessageRequest;
+import me.juhokim.SpringBootApplication.repository.MessageRepository;
+import me.juhokim.SpringBootApplication.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ChatMessageService {
+public class MessageService {
 
     @Autowired
-    private ChatSessionRepository chatSessionRepository;
+    private ChatRepository chatSessionRepository;
 
     @Autowired
-    private ChatMessageRepository chatMessageRepository;
+    private MessageRepository chatMessageRepository;
 
 
 
@@ -27,7 +27,7 @@ public class ChatMessageService {
 
 
 
-    public Message save(ChatMessageRequest dto) {
+    public Message save(MessageRequest dto) {
         return chatMessageRepository.save(dto.toEntity());
     }
 
@@ -39,7 +39,7 @@ public class ChatMessageService {
 
 
 
-    public Message updateById(Long messageId, ChatMessageRequest dto) {
+    public Message updateById(Long messageId, MessageRequest dto) {
         Message currentMessage = chatMessageRepository.findByMessageId(messageId);
         currentMessage.update(dto.getChatId(), dto.getContent());
 

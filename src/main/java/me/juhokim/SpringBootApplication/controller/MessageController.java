@@ -1,8 +1,8 @@
 package me.juhokim.SpringBootApplication.controller;
 
 import me.juhokim.SpringBootApplication.domain.Message;
-import me.juhokim.SpringBootApplication.dto.ChatMessageRequest;
-import me.juhokim.SpringBootApplication.service.ChatMessageService;
+import me.juhokim.SpringBootApplication.dto.MessageRequest;
+import me.juhokim.SpringBootApplication.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ChatMessageController {
+public class MessageController {
 
     @Autowired
-    private ChatMessageService chatMessageService;
+    private MessageService chatMessageService;
 
 
     // [Post] Send a chat message (x)
     @PostMapping("/users/{userId}/chat-sessions/{chat_id}")
-    public ResponseEntity<Message> createChatMessage(@RequestBody ChatMessageRequest dto){
+    public ResponseEntity<Message> createChatMessage(@RequestBody MessageRequest dto){
         Message newMessage = chatMessageService.save(dto);
         return ResponseEntity.ok(newMessage);
     }
@@ -34,7 +34,7 @@ public class ChatMessageController {
 
     // [PUT] Update Chat Message (X)
     @PutMapping("/users/{userId}/chat-sessions/{chat_id}/message/{message_id}")
-    public ResponseEntity<Message> updateMessage(@PathVariable Long message_id, @RequestBody ChatMessageRequest dto){
+    public ResponseEntity<Message> updateMessage(@PathVariable Long message_id, @RequestBody MessageRequest dto){
         Message updatedMessage = chatMessageService.updateById(message_id, dto);
         return ResponseEntity.ok(updatedMessage);
     }

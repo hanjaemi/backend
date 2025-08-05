@@ -1,29 +1,29 @@
 package me.juhokim.SpringBootApplication.service;
 
 import me.juhokim.SpringBootApplication.domain.Chat;
-import me.juhokim.SpringBootApplication.dto.ChatSessionRequest;
-import me.juhokim.SpringBootApplication.repository.ChatSessionRepository;
+import me.juhokim.SpringBootApplication.dto.ChatRequest;
+import me.juhokim.SpringBootApplication.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ChatSessionService {
+public class ChatService {
     @Autowired
-    ChatSessionRepository chatSessionRepository;
+    ChatRepository chatSessionRepository;
 
     public List<Chat> findByUserId(Long userId){
         return chatSessionRepository.findByUserId(userId);
     }
 
-    public Chat save(ChatSessionRequest dto) {
+    public Chat save(ChatRequest dto) {
         return chatSessionRepository.save(dto.toEntity());
     }
 
 
 
-    public Chat updateByChatId(long chatId, ChatSessionRequest dto) {
+    public Chat updateByChatId(long chatId, ChatRequest dto) {
         // 1. Find current chat to modify
         Chat currentChat = chatSessionRepository.findByChatId(chatId);
 

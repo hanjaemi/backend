@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "Difficulty")
-public class DifficultyLevel {
+public class Difficulty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

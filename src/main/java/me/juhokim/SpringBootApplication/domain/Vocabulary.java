@@ -20,9 +20,13 @@ public class Vocabulary {
     @Column(name = "word", length = 50)
     private String word;
 
-    @Column(name = "definition", length = 255)
-    private String definition;
+    @Column(name = "meaning", length = 255)
+    private String meaning;
 
-    @Column(name = "example_sentence", columnDefinition = "TEXT")
-    private String example_sentence;
+    @Column(name = "context", columnDefinition = "TEXT")
+    private String context;
+
+    @Column(name = "type", columnDefinition = "TEXT")
+    private String type;
+
 }

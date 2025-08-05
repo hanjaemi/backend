@@ -5,7 +5,7 @@ import lombok.Getter;
 import me.juhokim.SpringBootApplication.domain.Message;
 
 @Getter
-public class ChatMessageRequest {
+public class MessageRequest {
     Long chatId;
     String content;
 

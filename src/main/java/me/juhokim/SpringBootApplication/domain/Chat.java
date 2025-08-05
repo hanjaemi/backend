@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "chat")
-public class ChatSession {
+public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")
     private Long chatId;
 
-    @Column(name = "chat_title")
-    private String chatTitle;
-
-
     @Column(name = "user_id", nullable = false)
     private Long userId;
+
+
+    @Column(name = "chat_title")
+    private String chatTitle;
 
 
     @Column(name = "created_at", columnDefinition = "DATETIME")
@@ -33,7 +33,7 @@ public class ChatSession {
 
 
     @Builder
-    public ChatSession(String chatTitle, Long userId){
+    public Chat(String chatTitle, Long userId){
         this.chatTitle = chatTitle;
         this.userId = userId;
     }

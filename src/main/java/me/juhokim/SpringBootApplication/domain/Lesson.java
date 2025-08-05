@@ -14,8 +14,9 @@ public class Lesson {
     @Column(name = "lesson_id")
     private Long lessonId;
 
-    @Column(name = "section_id", nullable = false)
-    private Long sectionId;
+    @ManyToOne
+    @JoinColumn(name = "difficulty_id", nullable = false)
+    private Difficulty difficulty;
 
     @Column(name = "title", length = 50)
     private String title;

@@ -1,12 +1,14 @@
 package me.juhokim.SpringBootApplication.controller;
 
 
-import me.juhokim.SpringBootApplication.domain.Lesson;
-import me.juhokim.SpringBootApplication.domain.LessonSection;
-import me.juhokim.SpringBootApplication.service.LessonSectionService;
+import lombok.RequiredArgsConstructor;
+import me.juhokim.SpringBootApplication.domain.*;
+import me.juhokim.SpringBootApplication.dto.LessonDetail;
+import me.juhokim.SpringBootApplication.dto.LessonPreview;
+import me.juhokim.SpringBootApplication.service.ExamService;
+import me.juhokim.SpringBootApplication.service.GrammarService;
 import me.juhokim.SpringBootApplication.service.LessonService;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import me.juhokim.SpringBootApplication.service.VocabularyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,16 +16,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+@RequiredArgsConstructor
 @RestController
 public class LessonController {
-    @Autowired
-    LessonService lessonService;
+    private final LessonService lessonService;
+    private final GrammarService grammarService;
+    private final VocabularyService vocabularyService;
+    private final ExamService examService;
 
 
-    // [GET] All lesson sections for each level
-    @GetMapping("/difficulty-levels/{id}/lesson-section/{section_id}")
-    ResponseEntity<List<Lesson>> getLessons(@PathVariable Long section_id){
-        List<Lesson> lessons = lessonService.findById(section_id);
-        return ResponseEntity.ok().body(lessons);
+
+
+    // [GET] All lesson previews for a level
+    @GetMapping("/difficulty/{id}")
+    ResponseEntity<List<LessonPreview>> getLessonPreview(@PathVariable long id){
+
+        List<Lesson> lessonPreviews = lessonService.findByDifficulty(id);
+
+        return ResponseEntity.ok(
+                lessonPreviews.stream()
+                        .map(LessonPreview::new)
+                        .toList());
     }
+
+
+    // [GET] One lesson detail for a level
+    @GetMapping("/difficulty/{id}/lessons/{lessonId}")
+    ResponseEntity<LessonDetail> getLessonDetail(@PathVariable long id, @PathVariable long lessonId){
+
+        List<Grammar> grammars = grammarService.findByLessonId(lessonId);
+        List<Vocabulary> vocabs = vocabularyService.findByLessonId(lessonId);
+        List<Exam> exams = examService.findByLessonId(lessonId);
+
+        LessonDetail lessonDetails = new LessonDetail(id, lessonId, grammars, vocabs, exams);
+
+        return ResponseEntity.ok(lessonDetails);
+    }
+
+//    // [GET] All lesson sections for each level
+//    @GetMapping("/difficulty-levels/{difficulty_id}/lessons")
+//    ResponseEntity<List<Lesson>> getLessons(@PathVariable Long difficulty_id){
+//        List<Lesson> lessons = lessonService.findById(difficulty_id);
+//        return ResponseEntity.ok().body(lessons);
+//    }
 }

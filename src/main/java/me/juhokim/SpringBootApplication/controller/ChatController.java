@@ -1,8 +1,8 @@
 package me.juhokim.SpringBootApplication.controller;
 
 import me.juhokim.SpringBootApplication.domain.Chat;
-import me.juhokim.SpringBootApplication.dto.ChatSessionRequest;
-import me.juhokim.SpringBootApplication.service.ChatSessionService;
+import me.juhokim.SpringBootApplication.dto.ChatRequest;
+import me.juhokim.SpringBootApplication.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ChatSessionController {
+public class ChatController {
     @Autowired
-    ChatSessionService chatSessionService;
+    ChatService chatSessionService;
 
     // [GET] Get all chat sessions
     @GetMapping("/users/{userId}/chat-sessions")
@@ -25,7 +25,7 @@ public class ChatSessionController {
 
     // [POST] Create a Chat Session
     @PostMapping("/users/{userId}/chat-sessions")
-    ResponseEntity<Chat> getChatSession(@RequestBody ChatSessionRequest dto){
+    ResponseEntity<Chat> getChatSession(@RequestBody ChatRequest dto){
         Chat newChat = chatSessionService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newChat);
     }
@@ -33,7 +33,7 @@ public class ChatSessionController {
 
     // [PUT] Update a chat session (chat title)
     @PutMapping("/users/{userId}/chat-sessions/{chat_id}")
-    ResponseEntity<Chat> updateChatSession(@PathVariable long chat_id , @RequestBody ChatSessionRequest dto){
+    ResponseEntity<Chat> updateChatSession(@PathVariable long chat_id , @RequestBody ChatRequest dto){
         Chat updatedChat = chatSessionService.updateByChatId(chat_id, dto);
         return ResponseEntity.ok(updatedChat);
     }
