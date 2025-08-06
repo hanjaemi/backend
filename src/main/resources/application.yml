@@ -1,9 +1,10 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://aws-database.ch02ee00wgm9.ap-northeast-2.rds.amazonaws.com:3306/aws_db
+    username: admin
+    password: 1234qwerty!
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
