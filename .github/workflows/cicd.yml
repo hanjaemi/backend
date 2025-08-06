@@ -46,14 +46,14 @@ jobs:
           source: "./build/libs/${{ env.artifact }}"       # 로컬에서 빌드 결과
           target: "springboot"                             # EC2의 ~/springboot 디렉토리에 복사
 
-      - name: Run JAR on EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            pkill -f "java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar"
-            sleep 5
-            nohup java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar > springboot/build/libs/log.txt 2>&1 &
-
+#      - name: Run JAR on EC2
+#        uses: appleboy/ssh-action@v1.0.3
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ${{ secrets.EC2_USER }}
+#          key: ${{ secrets.EC2_KEY }}
+#          script: |
+#            pkill -f "java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar"
+#            sleep 5
+#            nohup java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar > springboot/build/libs/log.txt 2>&1 &
+#

@@ -17,14 +17,14 @@ public class MessageController {
 
 
     // [Post] Send a chat message (x)
-    @PostMapping("/users/{userId}/chat-sessions/{chat_id}")
+    @PostMapping("/users/{userId}/chats/{chat_id}")
     public ResponseEntity<Message> createChatMessage(@RequestBody MessageRequest dto){
         Message newMessage = chatMessageService.save(dto);
         return ResponseEntity.ok(newMessage);
     }
 
     // [GET] Get all chat messages (x)
-    @GetMapping("/users/{userId}/chat-sessions/{chatId}")
+    @GetMapping("/users/{userId}/chats/{chatId}")
     public ResponseEntity<List<Message>> getMessagesByChatIdForUser(
             @PathVariable Long chatId) {
         List<Message> messages = chatMessageService.findByChatId(chatId);
@@ -33,7 +33,7 @@ public class MessageController {
 
 
     // [PUT] Update Chat Message (X)
-    @PutMapping("/users/{userId}/chat-sessions/{chat_id}/message/{message_id}")
+    @PutMapping("/users/{userId}/chats/{chat_id}/messages/{message_id}")
     public ResponseEntity<Message> updateMessage(@PathVariable Long message_id, @RequestBody MessageRequest dto){
         Message updatedMessage = chatMessageService.updateById(message_id, dto);
         return ResponseEntity.ok(updatedMessage);
@@ -41,7 +41,7 @@ public class MessageController {
 
 
     // [Delete] Delete Chat Message (X)
-    @DeleteMapping("/users/{userId}/chat-sessions/{chatId}/message/{message_id}")
+    @DeleteMapping("/users/{userId}/chats/{chatId}/messages/{message_id}")
     public ResponseEntity<Void> deleteMessage(@PathVariable Long message_id){
         chatMessageService.deleteById(message_id);
         return ResponseEntity.ok().build();
