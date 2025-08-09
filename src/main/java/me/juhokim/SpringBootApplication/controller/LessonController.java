@@ -45,9 +45,27 @@ public class LessonController {
     @GetMapping("/difficulty/{id}/lessons/{lessonId}")
     ResponseEntity<LessonDetail> getLessonDetail(@PathVariable long id, @PathVariable long lessonId){
 
-        List<Grammar> grammars = grammarService.findByLessonId(lessonId);
-        List<Vocabulary> vocabs = vocabularyService.findByLessonId(lessonId);
-        List<Exam> exams = examService.findByLessonId(lessonId);
+        // 1. Find all lessons in difficulty Id
+        List<Lesson> lessons = lessonService.findByDifficulty(id);
+        List<Grammar> grammars = null;
+        List<Vocabulary> vocabs = null;
+        List<Exam> exams = null;
+
+        // 2. Find the corresponding grammar, vocabulary, exams
+        boolean lessonExists = false;
+        for (Lesson lesson : lessons){
+            if (lesson.getLessonId() == lessonId){
+                lessonExists = true;
+            }
+        }
+
+        // 3. Find grammars, vocabs, exams if exists
+        if  (lessonExists){
+            grammars = grammarService.findByLessonId(lessonId);
+            vocabs = vocabularyService.findByLessonId(lessonId);
+            exams = examService.findByLessonId(lessonId);
+        }
+
 
         LessonDetail lessonDetails = new LessonDetail(id, lessonId, grammars, vocabs, exams);
 
