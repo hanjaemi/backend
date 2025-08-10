@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,10 @@ public class LessonController {
     private final VocabularyService vocabularyService;
     private final ExamService examService;
 
+
+    List<Grammar> grammars = null;
+    List<Vocabulary> vocabs = null;
+    List<Exam> exams = null;
 
 
 
@@ -40,6 +45,29 @@ public class LessonController {
                         .toList());
     }
 
+    // [GET] All lesson details for a level
+    @GetMapping("/difficulty/{id}/lessons")
+    ResponseEntity<List<LessonDetail>> getLessonDetails(@PathVariable long id){
+
+        // 1. Find all lessons in difficulty Id
+        List<Lesson> lessons = lessonService.findByDifficulty(id);
+        List<LessonDetail> lessonDetails = new ArrayList<>();
+
+
+        // 2. Add all corresponding grammar, vocabulary, exams for every lesson
+        for (Lesson lesson : lessons){
+            long lessonId = lesson.getLessonId();
+            grammars = grammarService.findByLessonId(lessonId);
+            vocabs = vocabularyService.findByLessonId(lessonId);
+            exams = examService.findByLessonId(lessonId);
+
+            lessonDetails.add(new LessonDetail(id, lessonId, grammars, vocabs, exams));
+        }
+
+
+        return ResponseEntity.ok(lessonDetails);
+    }
+
 
     // [GET] One lesson detail for a level
     @GetMapping("/difficulty/{id}/lessons/{lessonId}")
@@ -47,9 +75,7 @@ public class LessonController {
 
         // 1. Find all lessons in difficulty Id
         List<Lesson> lessons = lessonService.findByDifficulty(id);
-        List<Grammar> grammars = null;
-        List<Vocabulary> vocabs = null;
-        List<Exam> exams = null;
+
 
         // 2. Find the corresponding grammar, vocabulary, exams
         boolean lessonExists = false;
