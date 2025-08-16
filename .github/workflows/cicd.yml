@@ -30,25 +30,10 @@ jobs:
       - name: Set artifact
         run: echo "artifact=$(ls ./build/libs/*.jar | xargs -n1 basename)" >> $GITHUB_ENV
 
-      - name: Copy JAR to EC2
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "./build/libs/${{ env.artifact }}"
-          target: "~/springboot/"
-
-      - name: Restart JAR on EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            cd ~/springboot
-            pkill -f "java -jar" || true
-            sleep 5
-            nohup java -jar ${{ env.artifact }} > app.log 2>&1 </dev/null &
-            disown
-
+      - name: Deploy to EC2
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          scp -i private_key.pem -o StrictHostKeyChecking=no ./build/libs/${{ env.artifact }} ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/backend.jar
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "pgrep java | xargs kill -9 || true; nohup java -jar /home/${{ secrets.EC2_USER }}/backend.jar > app.log 2>&1 &"
+          rm -f private_key.pem
