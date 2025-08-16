@@ -46,8 +46,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd 
-            cd springboot/build/libs/
+            cd ~/springboot
             pkill -f "java -jar" || true
             sleep 5
-            nohup java -jar ${{ env.artifact }} > app.log 2>&1 &
+            nohup java -jar ${{ env.artifact }} > app.log 2>&1 </dev/null &
+            disown
+
