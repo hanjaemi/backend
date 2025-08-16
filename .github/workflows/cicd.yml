@@ -46,6 +46,8 @@ jobs:
           source: "./build/libs/${{ env.artifact }}"       # 로컬에서 빌드 결과
           target: "springboot"                             # EC2의 ~/springboot 디렉토리에 복사
 
+      - name: Kill previous process
+        run: kill -f 'java -jar backend-1.0-SNAPSHOT.jar'
 
 #      - name: Run JAR on EC2
 #        uses: appleboy/ssh-action@v1.0.3
