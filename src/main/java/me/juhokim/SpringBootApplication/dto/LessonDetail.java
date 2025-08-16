@@ -8,6 +8,7 @@ import me.juhokim.SpringBootApplication.domain.Exam;
 import me.juhokim.SpringBootApplication.domain.Grammar;
 import me.juhokim.SpringBootApplication.domain.Lesson;
 import me.juhokim.SpringBootApplication.domain.Vocabulary;
+import me.juhokim.SpringBootApplication.domain.Summary;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public class LessonDetail {
     private List<Grammar> grammars;
     private List<Vocabulary> vocabs;
     private List<Exam> exams;
+    private List<Summary> summaries;
 
 }
