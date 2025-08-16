@@ -9,6 +9,7 @@ import me.juhokim.SpringBootApplication.service.ExamService;
 import me.juhokim.SpringBootApplication.service.GrammarService;
 import me.juhokim.SpringBootApplication.service.LessonService;
 import me.juhokim.SpringBootApplication.service.VocabularyService;
+import me.juhokim.SpringBootApplication.service.SummaryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,13 @@ public class LessonController {
     private final GrammarService grammarService;
     private final VocabularyService vocabularyService;
     private final ExamService examService;
+    private final SummaryService summaryService;
 
 
     List<Grammar> grammars = null;
     List<Vocabulary> vocabs = null;
     List<Exam> exams = null;
+    List<Summary> summaries = null;
 
 
 
@@ -60,8 +63,9 @@ public class LessonController {
             grammars = grammarService.findByLessonId(lessonId);
             vocabs = vocabularyService.findByLessonId(lessonId);
             exams = examService.findByLessonId(lessonId);
+            summaries = summaryService.findByLessonId(lessonId);
 
-            lessonDetails.add(new LessonDetail(id, lessonId, grammars, vocabs, exams));
+            lessonDetails.add(new LessonDetail(id, lessonId, grammars, vocabs, exams, summaries));
         }
 
 
@@ -93,7 +97,7 @@ public class LessonController {
         }
 
 
-        LessonDetail lessonDetails = new LessonDetail(id, lessonId, grammars, vocabs, exams);
+        LessonDetail lessonDetails = new LessonDetail(id, lessonId, grammars, vocabs, exams, summaries);
 
         return ResponseEntity.ok(lessonDetails);
     }
