@@ -19,5 +19,4 @@ public class SummaryController {
         List<Summary> summaries = summaryService.findByLessonId(lesson_id);
         return ResponseEntity.ok().body(summaries);
     }
-    
 }
