@@ -1,25 +1,18 @@
-# Worflow name (testing)
 name: CI/CD
 
-
-# Workflow starting condition
 on:
   push:
     branches: [ main ]
 
-
-
 jobs:
   build:
-    runs-on: ubuntu-latest # Workflow running environment
+    runs-on: ubuntu-latest
 
     env:
       DB_URL: ${{ secrets.DB_URL }}
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
-
-    # Steps for running
     steps:
       - uses: actions/checkout@v3
 
@@ -35,7 +28,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Set artifact
-        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+        run: echo "artifact=$(ls ./build/libs/*.jar | xargs -n1 basename)" >> $GITHUB_ENV
 
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@v0.1.4
@@ -43,20 +36,18 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "./build/libs/${{ env.artifact }}"       # 로컬에서 빌드 결과
-          target: "springboot"                             # EC2의 ~/springboot 디렉토리에 복사
+          source: "./build/libs/${{ env.artifact }}"
+          target: "~/springboot/"
 
-      - name: Kill previous process
-        run: pkill -f 'java -jar backend-1.0-SNAPSHOT.jar'
-
-#      - name: Run JAR on EC2
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USER }}
-#          key: ${{ secrets.EC2_KEY }}
-#          script: |
-#            pkill -f "java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar"
-#            sleep 5
-#            nohup java -jar springboot/build/libs/backend-1.0-SNAPSHOT.jar > springboot/build/libs/log.txt 2>&1 &
-#
+      - name: Restart JAR on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd 
+            cd springboot/build/libs/
+            pkill -f "java -jar" || true
+            sleep 5
+            nohup java -jar ${{ env.artifact }} > app.log 2>&1 &
