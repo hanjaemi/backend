@@ -14,10 +14,9 @@ public class SummaryController {
     @Autowired
     SummaryService summaryService;
 
-    @GetMapping("/difficulty-levels/{id}/lesson-section/{section_id}/summary/{lesson_id}")
+    @GetMapping("/difficulty/{id}/lessons/{section_id}/summary/{lesson_id}")
     ResponseEntity<List<Summary>> getSummary(@PathVariable Long lesson_id){
         List<Summary> summaries = summaryService.findByLessonId(lesson_id);
         return ResponseEntity.ok().body(summaries);
     }
-    
 }

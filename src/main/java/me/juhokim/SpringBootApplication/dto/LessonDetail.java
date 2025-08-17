@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.juhokim.SpringBootApplication.domain.Exam;
 import me.juhokim.SpringBootApplication.domain.Grammar;
-import me.juhokim.SpringBootApplication.domain.Lesson;
 import me.juhokim.SpringBootApplication.domain.Vocabulary;
 import me.juhokim.SpringBootApplication.domain.Summary;
 
