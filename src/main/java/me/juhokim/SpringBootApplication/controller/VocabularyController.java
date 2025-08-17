@@ -1,8 +1,6 @@
 package me.juhokim.SpringBootApplication.controller;
 
-import me.juhokim.SpringBootApplication.domain.Grammar;
 import me.juhokim.SpringBootApplication.domain.Vocabulary;
-import me.juhokim.SpringBootApplication.service.GrammarService;
 import me.juhokim.SpringBootApplication.service.VocabularyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,7 @@ public class VocabularyController {
     VocabularyService vocabularyService;
 
     // [GET] Get grammars
-    @GetMapping("/difficulty-levels/{id}/lesson-section/{section_id}/vocabulary/{lesson_id}")
+    @GetMapping("/difficulty/{id}/lessons/{section_id}/vocabulary/{lesson_id}")
     ResponseEntity<List<Vocabulary>> getVocabs(@PathVariable Long lesson_id){
         List<Vocabulary> vocabularies = vocabularyService.findByLessonId(lesson_id);
         return ResponseEntity.ok().body(vocabularies);

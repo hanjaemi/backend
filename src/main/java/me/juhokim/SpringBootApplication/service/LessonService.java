@@ -1,6 +1,5 @@
 package me.juhokim.SpringBootApplication.service;
 
-import me.juhokim.SpringBootApplication.domain.Grammar;
 import me.juhokim.SpringBootApplication.domain.Lesson;
 import me.juhokim.SpringBootApplication.repository.GrammarRepository;
 import me.juhokim.SpringBootApplication.repository.LessonRepository;
