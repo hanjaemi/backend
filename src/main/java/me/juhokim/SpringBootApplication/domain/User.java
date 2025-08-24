@@ -1,36 +1,33 @@
 package me.juhokim.SpringBootApplication.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "User")
+@NoArgsConstructor
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "username", length = 100)
-    private String username;
-
-    @Column(name = "email", length = 255)
-    private String email;
-
-    @Column(name = "password_hash", length = 255)
-    private String passwordHash;
+    @Column(name = "supabaseId")
+    private String supabaseId;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt = new Date();
 
-    @Column(name = "last_login")
-    private LocalDateTime lastLogin;
-
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Builder
+    public User(String supabaseId){
+        this.supabaseId = supabaseId;
+    }
 }
